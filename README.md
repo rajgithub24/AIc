@@ -118,14 +118,4 @@ Contributions are welcome. For meaningful changes:
 2. Run unit tests and ensure formatting/linting passes.
 3. Open a Pull Request describing the change and its rationale.
 
-## Contact
 
-If you'd like to discuss this project or request features, open an issue or contact the maintainer listed in the repository metadata.
-
----
-
-This README aims to give recruiters and developers an immediate, runnable overview of the project. If you want, I can also:
-
-- Add a `README` badge matrix (build / license / docker)
-- Create a short demo GIF and Golden Path checklist
-- Add a CONTRIBUTING.md and CODE_OF_CONDUCT
