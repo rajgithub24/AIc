@@ -40,10 +40,10 @@ public class HuggingFaceService {
     @Value("${huggingface.api.token}")
     private String apiToken;
 
-    @Value("${huggingface.api.max-attempts:3}")
+    @Value("${huggingface.api.max-attempts}")
     private int maxAttempts;
 
-    @Value("${huggingface.api.retry-backoff-ms:750}")
+    @Value("${huggingface.api.retry-backoff-ms}")
     private long retryBackoffMs;
 
     private static final int CHUNK_SIZE = 1800;

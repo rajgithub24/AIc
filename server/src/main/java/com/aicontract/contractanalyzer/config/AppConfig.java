@@ -14,8 +14,8 @@ public class AppConfig {
 
     @Bean
     public RestTemplate restTemplate(
-            @Value("${huggingface.api.connect-timeout-ms:5000}") int connectTimeoutMs,
-            @Value("${huggingface.api.read-timeout-ms:30000}") int readTimeoutMs) {
+            @Value("${huggingface.api.connect-timeout-ms}") int connectTimeoutMs,
+            @Value("${huggingface.api.read-timeout-ms}") int readTimeoutMs) {
 
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
 

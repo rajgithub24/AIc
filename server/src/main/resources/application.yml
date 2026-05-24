@@ -1,8 +1,11 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
+
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/contract_analyzer_db}
-    username: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
 
   jpa:
     hibernate:
@@ -15,7 +18,7 @@ spring:
         format_sql: true
 
 server:
-  port: 8080
+  port: ${SERVER_PORT}
 
 springdoc:
   api-docs:
@@ -30,13 +33,22 @@ logging:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%X{requestId:-no-request}] %logger{36} - %msg%n"
 
 file:
-  upload-dir: uploads/
+  upload-dir: ${FILE_UPLOAD_DIR}
+
+app:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS}
+  jwt:
+    secret-key: ${JWT_SECRET_KEY}
+  openapi:
+    server-url: ${OPENAPI_SERVER_URL}
+    server-description: ${OPENAPI_SERVER_DESCRIPTION}
 
 huggingface:
   api:
-    url: ${HUGGINGFACE_API_URL:https://router.huggingface.co/hf-inference/models/facebook/bart-large-cnn}
-    token: ${HUGGINGFACE_API_TOKEN:}
-    connect-timeout-ms: ${HUGGINGFACE_CONNECT_TIMEOUT_MS:5000}
-    read-timeout-ms: ${HUGGINGFACE_READ_TIMEOUT_MS:30000}
-    max-attempts: ${HUGGINGFACE_MAX_ATTEMPTS:3}
-    retry-backoff-ms: ${HUGGINGFACE_RETRY_BACKOFF_MS:750}
+    url: ${HUGGINGFACE_API_URL}
+    token: ${HUGGINGFACE_API_TOKEN}
+    connect-timeout-ms: ${HUGGINGFACE_CONNECT_TIMEOUT_MS}
+    read-timeout-ms: ${HUGGINGFACE_READ_TIMEOUT_MS}
+    max-attempts: ${HUGGINGFACE_MAX_ATTEMPTS}
+    retry-backoff-ms: ${HUGGINGFACE_RETRY_BACKOFF_MS}

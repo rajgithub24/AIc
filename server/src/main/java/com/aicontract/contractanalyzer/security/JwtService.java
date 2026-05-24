@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -12,10 +13,14 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-        private static final String SECRET_KEY = "mysecretkeymysecretkeymysecretkey12";
+        private final Key key;
 
-        private final Key key = Keys.hmacShaKeyFor(
-                        SECRET_KEY.getBytes());
+        public JwtService(
+                        @Value("${app.jwt.secret-key}") String secretKey) {
+
+                this.key = Keys.hmacShaKeyFor(
+                                secretKey.getBytes());
+        }
 
         public String generateToken(String email) {
 
