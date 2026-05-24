@@ -9,6 +9,11 @@ const RegisterPage = () => {
     password: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState(null);
+
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
 
     setFormData({
@@ -21,20 +26,35 @@ const RegisterPage = () => {
 
     e.preventDefault();
 
+    if (isLoading) {
+      return;
+    }
+
+    setIsLoading(true);
+    setMessage(null);
+
     try {
 
       await registerUser(formData);
 
-      alert("Registration Successful");
+      setMessage({
+        type: "success",
+        text: "Registration successful. Redirecting to login...",
+      });
 
-      // Redirect to login after successful registration
-      navigate("/login");
+      setTimeout(() => {
+        navigate("/login");
+      }, 800);
 
     } catch (error) {
 
       console.error(error);
 
-      alert("Registration Failed");
+      setMessage({
+        type: "error",
+        text: "Registration failed. Please check your details and try again.",
+      });
+      setIsLoading(false);
     }
   };
 
@@ -55,7 +75,10 @@ const RegisterPage = () => {
           name="email"
           placeholder="Enter email"
           className="w-full border p-3 rounded mb-4"
+          value={formData.email}
           onChange={handleChange}
+          disabled={isLoading}
+          required
         />
 
         <input
@@ -63,14 +86,37 @@ const RegisterPage = () => {
           name="password"
           placeholder="Enter password"
           className="w-full border p-3 rounded mb-4"
+          value={formData.password}
           onChange={handleChange}
+          disabled={isLoading}
+          required
         />
+
+        {message && (
+          <div
+            className={`mb-4 rounded border px-3 py-2 text-sm ${
+              message.type === "success"
+                ? "border-green-200 bg-green-50 text-green-700"
+                : "border-red-200 bg-red-50 text-red-700"
+            }`}
+          >
+            {message.text}
+          </div>
+        )}
 
         <button
           type="submit"
-          className="w-full bg-black text-white p-3 rounded"
+          className="w-full bg-black text-white p-3 rounded disabled:cursor-not-allowed disabled:opacity-70"
+          disabled={isLoading}
         >
-          Register
+          {isLoading ? (
+            <span className="flex items-center justify-center gap-2">
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+              Creating account...
+            </span>
+          ) : (
+            "Register"
+          )}
         </button>
 
         <p className="text-sm text-center mt-4">

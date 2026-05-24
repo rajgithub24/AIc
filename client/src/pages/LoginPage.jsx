@@ -10,6 +10,9 @@ const LoginPage = () => {
     password: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState(null);
+
   const navigate = useNavigate();
 
   const { login } = useAuth();
@@ -26,6 +29,13 @@ const LoginPage = () => {
 
     e.preventDefault();
 
+    if (isLoading) {
+      return;
+    }
+
+    setIsLoading(true);
+    setMessage(null);
+
     try {
 
       const response =
@@ -33,15 +43,22 @@ const LoginPage = () => {
 
       login(response.token);
 
-      alert("Login Successful");
+      setMessage({
+        type: "success",
+        text: "Login successful. Redirecting...",
+      });
+
       navigate("/");
-      console.log(response);
 
     } catch (error) {
 
       console.error(error);
 
-      alert("Login Failed");
+      setMessage({
+        type: "error",
+        text: "Login failed. Please check your email and password.",
+      });
+      setIsLoading(false);
     }
   };
 
@@ -62,7 +79,10 @@ const LoginPage = () => {
           name="email"
           placeholder="Enter email"
           className="w-full border p-3 rounded mb-4"
+          value={formData.email}
           onChange={handleChange}
+          disabled={isLoading}
+          required
         />
 
         <input
@@ -70,14 +90,37 @@ const LoginPage = () => {
           name="password"
           placeholder="Enter password"
           className="w-full border p-3 rounded mb-4"
+          value={formData.password}
           onChange={handleChange}
+          disabled={isLoading}
+          required
         />
+
+        {message && (
+          <div
+            className={`mb-4 rounded border px-3 py-2 text-sm ${
+              message.type === "success"
+                ? "border-green-200 bg-green-50 text-green-700"
+                : "border-red-200 bg-red-50 text-red-700"
+            }`}
+          >
+            {message.text}
+          </div>
+        )}
 
         <button
           type="submit"
-          className="w-full bg-black text-white p-3 rounded"
+          className="w-full bg-black text-white p-3 rounded disabled:cursor-not-allowed disabled:opacity-70"
+          disabled={isLoading}
         >
-          Login
+          {isLoading ? (
+            <span className="flex items-center justify-center gap-2">
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+              Signing in...
+            </span>
+          ) : (
+            "Login"
+          )}
         </button>
 
         <p className="text-sm text-center mt-4">

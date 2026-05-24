@@ -2,6 +2,12 @@ AI Contract Analyzer
 
 A full-stack Java + React application that extracts, analyzes, and visualizes contract intelligence using AI-driven processing. Built to be developer-friendly and recruiter-ready: clear architecture, easy setup, and production-ready deployment options.
 
+## Live link
+
+
+```bash
+https://aicontract-ecru.vercel.app
+```
 ## Key Highlights
 
 - **Purpose:** Upload contracts, extract structured information, run AI analysis, and visualize results on a dashboard for faster contract review.
